@@ -1,0 +1,36 @@
+name: 'List/Remove Problematic Terraform Resource'
+
+on:
+  workflow_dispatch:
+    inputs:
+      resource-address:
+        required: false
+        type: string
+#  push:
+#    branches:
+#      - 'main'
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Read State
+        id: validate
+        run: terraform state list
+
+      - name: Terraform Remove problematic resource
+        if: inputs.resource-address
+        run: |
+          terraform state rm ${{ inputs.resource-address }}
