@@ -38,6 +38,6 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: |
-          echo "github_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN }}\"" > terraform.auto.tfvars
+          echo "github_token = \"${{ secrets.PAT }}\"" > terraform.auto.tfvars
           echo "tfe_token = \"${{ secrets.TF_API_TOKEN }}\"" >> terraform.auto.tfvars
           terraform apply -auto-approve -input=false
