@@ -1,5 +1,5 @@
 module "aws_organization" {
-  source = "github.com/organizations-infrastructure/aws-organizational-unit"
+  source = "github.com/codingones-terraform-modules/aws-organizational-unit"
 
   aws_organization                          = local.project.aws_organizational_unit
   aws_organization_parent_id                = local.project.aws_root_id
@@ -21,7 +21,7 @@ provider "aws" {
 }
 
 module "aws_organizational_unit_iam" {
-  source = "github.com/organizations-infrastructure/aws-organizational-unit-iam"
+  source = "github.com/codingones-terraform-modules/aws-organizational-unit-iam"
 
   aws_organization = local.project.aws_organizational_unit
 
@@ -33,7 +33,7 @@ module "aws_organizational_unit_iam" {
 }
 
 module "terraform_cloud" {
-  source = "github.com/organizations-infrastructure/terraform-cloud-organization"
+  source = "github.com/codingones-terraform-modules/terraform-cloud-organization"
 
   terraform_organization                          = local.project.terraform_cloud_organization
   organization_email                              = local.project.organization_email
@@ -50,7 +50,7 @@ module "terraform_cloud" {
 }
 
 module "github_organization_variables" {
-  source = "github.com/organizations-infrastructure/github-organization"
+  source = "github.com/codingones-terraform-modules/github-organization"
 
   tfe_team_token = module.terraform_cloud.tfe_team_token
 
