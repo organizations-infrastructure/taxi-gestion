@@ -49,13 +49,15 @@ module "terraform_cloud" {
   depends_on = [module.aws_organizational_unit_iam]
 }
 
-module "github_organization_variables" {
+module "github_organization" {
   source = "github.com/codingones-terraform-modules/github-organization"
 
-  tfe_team_token = module.terraform_cloud.tfe_team_token
+  secrets   = local.project.github_organization_secrets
+  variables = local.project.github_organization_variables
 
   providers = {
     github = github
+    tfe    = tfe
   }
 
   depends_on = [module.terraform_cloud]
