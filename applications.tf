@@ -1,45 +1,44 @@
-module "api_repository" {
-  source = "github.com/codingones-terraform-modules/aws-ecr-node-api"
+locals {
+  applications = {
+    api = {
+      github_repository        = "api"
+      github_repository_topics = ["api", "node", "fastify", "typescript", "postgresql", "aws", "ecr", "docker"]
+      template_repositories    = ["codingones-github-templates/fastify-api", "codingones-github-templates/aws-application-api"]
+      service                  = "ecr"
+      policy                   = local.policies.ecr
+    }
+    client = {
+      github_repository        = "client"
+      github_repository_topics = ["client", "node", "typescript", "aws", "cloudfront", "cognito"]
+      template_repositories    = ["codingones-github-templates/aws-angular-client-template", "codingones-github-templates/aws-application-client"]
+      service                  = "s3-client"
+      policy                   = local.policies.client
+    }
+  }
+}
+
+module "application" {
+  for_each = local.applications
+
+  source = "github.com/codingones-terraform-modules/aws-application"
 
   aws_organizational_unit = local.project.aws_organizational_unit
   github_organization     = local.project.github_organization
   terraform_organization  = local.project.terraform_cloud_organization
   project                 = local.project.name
 
-  github_repository   = "api"
-  template_repository = "codingones-github-templates/aws-application-api-fastify"
-  service             = "ecr"
-  service_policy      = local.policies.ecr
+  github_repository        = each.value.github_repository
+  github_repository_topics = each.value.github_repository_topics
+  template_repositories    = each.value.template_repositories
+  service                  = each.value.service
+  policy                   = each.value.policy
+  github_token             = var.github_token
 
   providers = {
     github = github
     tfe    = tfe
     aws    = aws.organizational_unit
     http   = http
-  }
-
-  depends_on = [module.github_organization]
-}
-
-module "client_repository" {
-  source = "github.com/codingones-terraform-modules/aws-client-angular"
-
-  aws_organizational_unit = local.project.aws_organizational_unit
-  github_organization     = local.project.github_organization
-  terraform_organization  = local.project.terraform_cloud_organization
-  project                 = local.project.name
-
-  github_repository   = "client"
-  template_repository = "codingones-github-templates/aws-application-client-angular"
-  service             = "client"
-  about               = "A basic web client for project"
-  policy              = local.policies.client
-
-  providers = {
-    github = github
-    aws    = aws.child
-    http   = http
-    tfe    = tfe
   }
 
   depends_on = [module.github_organization]

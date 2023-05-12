@@ -11,3 +11,10 @@ variable "tfe_token" {
   default     = false
   sensitive   = true
 }
+
+variable "notification_webhook" {
+  description = "A webhook to notify about deployments"
+  nullable    = false
+  default     = false
+  sensitive   = true
+}
