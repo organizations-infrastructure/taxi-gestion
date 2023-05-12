@@ -32,7 +32,7 @@ module "aws_organizational_unit_iam" {
   depends_on = [module.aws_organization]
 }
 
-module "terraform_cloud" {
+module "terraform_cloud_organization" {
   source = "github.com/codingones-terraform-modules/terraform-cloud-organization"
 
   terraform_organization                          = local.project.terraform_cloud_organization
@@ -60,5 +60,5 @@ module "github_organization" {
     tfe    = tfe
   }
 
-  depends_on = [module.terraform_cloud]
+  depends_on = [module.terraform_cloud_organization]
 }

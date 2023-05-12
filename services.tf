@@ -59,5 +59,5 @@ module "services" {
     http   = http
   }
 
-  depends_on = [module.github_organization_variables]
+  depends_on = [module.github_organization]
 }
