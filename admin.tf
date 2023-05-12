@@ -40,7 +40,7 @@ module "terraform_cloud_organization" {
   organization_iam_deployer_aws_access_key_id     = module.aws_organizational_unit_iam.aws_deployer_iam_access_key_id
   organization_iam_deployer_aws_secret_access_key = module.aws_organizational_unit_iam.aws_deployer_iam_access_key_secret
   project                                         = local.project.name
-  organization_variables                          = local.project.organization_variables
+  terraform_organization_variables                = local.project.terraform_organization_variables
 
   providers = {
     tfe = tfe
@@ -52,8 +52,9 @@ module "terraform_cloud_organization" {
 module "github_organization" {
   source = "github.com/codingones-terraform-modules/github-organization"
 
-  secrets   = local.project.github_organization_secrets
-  variables = local.project.github_organization_variables
+  terraform_organization        = local.project.terraform_cloud_organization
+  github_organization_secrets   = local.project.github_organization_secrets
+  github_organization_variables = local.project.github_organization_variables
 
   providers = {
     github = github

@@ -44,8 +44,9 @@ module "services" {
   github_organization     = local.project.github_organization
   terraform_organization  = local.project.terraform_cloud_organization
 
-  github_repository   = "${each.key}-infrastructure"
-  template_repository = each.value.template
+  github_repository        = "${each.key}-infrastructure"
+  template_repository      = each.value.template
+  github_repository_topics = ["terraform", "aws"]
 
   project = local.project.name
   service = each.key
