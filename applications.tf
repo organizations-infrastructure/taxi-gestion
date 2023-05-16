@@ -17,7 +17,7 @@ locals {
   }
 }
 
-module "application" {
+module "applications" {
   for_each = local.applications
 
   source = "github.com/codingones-terraform-modules/aws-application"
