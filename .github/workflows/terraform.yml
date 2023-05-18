@@ -40,5 +40,7 @@ jobs:
         run: |
           echo "github_token = \"${{ secrets.PAT }}\"" > terraform.auto.tfvars
           echo "tfe_token = \"${{ secrets.TF_API_TOKEN }}\"" >> terraform.auto.tfvars
-          echo "notification_webhook = \"${{ secrets.DISCORD_NOTIFY_HOOK_URL }}\"" >> terraform.auto.tfvars
+          echo "notification_webhook_failures = \"${{ secrets.DISCORD_FAILURES_WEBHOOK }}\"" >> terraform.auto.tfvars
+          echo "notification_webhook_successes = \"${{ secrets.DISCORD_RELEASES_WEBHOOK }}\"" >> terraform.auto.tfvars
+          echo "notification_webhook_releases = \"${{ secrets.DISCORD_SUCCESSES_WEBHOOK }}\"" >> terraform.auto.tfvars
           terraform apply -auto-approve -input=false
