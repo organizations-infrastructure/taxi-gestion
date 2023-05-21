@@ -37,16 +37,9 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: 'us-east-1'
-          AWS_REGION: 'us-east-1'
         run: |
           echo "github_token = \"${{ secrets.PAT }}\"" > terraform.auto.tfvars
           echo "tfe_token = \"${{ secrets.TF_API_TOKEN }}\"" >> terraform.auto.tfvars
-          terraform import module.aws_organization.aws_organizations_organizational_unit.organizational_unit "ou-gw1z-ksosdgh7"
-          terraform import module.aws_organization.aws_organizations_account.management_account "277198258608"
           echo "notification_webhook_failures = \"${{ secrets.DISCORD_FAILURES_WEBHOOK }}\"" >> terraform.auto.tfvars
           echo "notification_webhook_successes = \"${{ secrets.DISCORD_RELEASES_WEBHOOK }}\"" >> terraform.auto.tfvars
           echo "notification_webhook_releases = \"${{ secrets.DISCORD_SUCCESSES_WEBHOOK }}\"" >> terraform.auto.tfvars
