@@ -17,28 +17,28 @@ locals {
   }
 }
 
-module "applications" {
-  for_each = local.applications
-
-  source = "github.com/codingones-terraform-modules/aws-application"
-
-  aws_organizational_unit = local.project.aws_organizational_unit
-  github_organization     = local.project.github_organization
-  terraform_organization  = local.project.terraform_cloud_organization
-  project                 = local.project.name
-
-  github_repository        = each.value.github_repository
-  github_repository_topics = each.value.github_repository_topics
-  template_repositories    = each.value.template_repositories
-  service                  = each.value.service
-  policy                   = each.value.policy
-
-  providers = {
-    github = github
-    tfe    = tfe
-    aws    = aws.organizational_unit
-    http   = http
-  }
-
-  depends_on = [module.github_organization]
-}
+#module "applications" {
+#  for_each = local.applications
+#
+#  source = "github.com/codingones-terraform-modules/aws-application"
+#
+#  aws_organizational_unit = local.project.aws_organizational_unit
+#  github_organization     = local.project.github_organization
+#  terraform_organization  = local.project.terraform_cloud_organization
+#  project                 = local.project.name
+#
+#  github_repository        = each.value.github_repository
+#  github_repository_topics = each.value.github_repository_topics
+#  template_repositories    = each.value.template_repositories
+#  service                  = each.value.service
+#  policy                   = each.value.policy
+#
+#  providers = {
+#    github = github
+#    tfe    = tfe
+#    aws    = aws.organizational_unit
+#    http   = http
+#  }
+#
+#  depends_on = [module.github_organization]
+#}
