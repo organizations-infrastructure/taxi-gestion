@@ -3,14 +3,14 @@ locals {
     api = {
       github_repository        = "api"
       github_repository_topics = ["api", "node", "fastify", "typescript", "postgresql", "aws", "ecr", "docker"]
-      template_repositories    = ["codingones-github-templates/aws-application-api", "codingones-github-templates/fastify-api"]
+      template_repositories    = ["codingones-github-templates/fastify-api", "codingones-github-templates/aws-application-api"]
       service                  = "ecr"
       policy                   = local.policies.ecr
     }
     client = {
       github_repository        = "client"
       github_repository_topics = ["client", "node", "typescript", "aws", "cloudfront", "cognito"]
-      template_repositories    = ["codingones-github-templates/aws-application-client", "codingones-github-templates/aws-angular-client-template"]
+      template_repositories    = ["codingones-github-templates/angular-client", "codingones-github-templates/aws-application-client", ]
       service                  = "s3-client"
       policy                   = local.policies.client
     }
