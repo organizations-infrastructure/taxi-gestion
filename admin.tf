@@ -1,15 +1,15 @@
-#module "aws_organization" {
-#  source = "github.com/codingones-terraform-modules/aws-organizational-unit"
-#
-#  aws_organization                          = local.project.aws_organizational_unit
-#  aws_organization_parent_id                = local.project.aws_root_id
-#  aws_organization_management_account_email = local.project.aws_management_email
-#  aws_organization_management_account_name  = local.project.aws_management_account
-#
-#  providers = {
-#    aws = aws.root
-#  }
-#}
+module "aws_organization" {
+  source = "github.com/codingones-terraform-modules/aws-organizational-unit"
+
+  aws_organization                          = local.project.aws_organizational_unit
+  aws_organization_parent_id                = local.project.aws_root_id
+  aws_organization_management_account_email = local.project.aws_management_email
+  aws_organization_management_account_name  = local.project.aws_management_account
+
+  providers = {
+    aws = aws.root
+  }
+}
 
 #provider "aws" {
 #  alias  = "organizational_unit"
