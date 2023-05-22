@@ -10,7 +10,7 @@ locals {
     client = {
       github_repository        = "client"
       github_repository_topics = ["client", "node", "typescript", "aws", "cloudfront", "cognito"]
-      template_repositories    = ["codingones-github-templates/angular-client", "codingones-github-templates/aws-application-client", ]
+      template_repositories    = ["codingones-github-templates/angular-client", "codingones-github-templates/aws-application-client"]
       service                  = "s3-client"
       policy                   = local.policies.client
     }

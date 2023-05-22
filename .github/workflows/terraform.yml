@@ -40,8 +40,30 @@ jobs:
         run: |
           echo "github_token = \"${{ secrets.PAT }}\"" > terraform.auto.tfvars
           echo "tfe_token = \"${{ secrets.TF_API_TOKEN }}\"" >> terraform.auto.tfvars
-          echo "notification_webhook_failures = \"${{ secrets.DISCORD_FAILURES_WEBHOOK }}\"" >> terraform.auto.tfvars
-          echo "notification_webhook_successes = \"${{ secrets.DISCORD_RELEASES_WEBHOOK }}\"" >> terraform.auto.tfvars
-          echo "notification_webhook_releases = \"${{ secrets.DISCORD_SUCCESSES_WEBHOOK }}\"" >> terraform.auto.tfvars
           terraform apply -auto-approve -input=false
-  
+
+  notify-on-error:
+    needs:
+      - terraform
+    if: ${{ always() && (contains(needs.terraform.result, 'failure') || contains(needs.terraform.result, 'cancelled')) }}
+    uses: codingones/github-actions-workflows/.github/workflows/notify-discord.yml@main
+    with:
+      bot-username: Failures Bot
+      notification-content: Failed to update the organization **${{ github.repository }}**
+      embed-title: Go to the workflow
+      embed-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    secrets:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_FAILURES_WEBHOOK }}
+
+  notify-on-success:
+    needs:
+      - terraform
+    if: ${{ always() && needs.terraform.result == 'success' }}
+    uses: codingones/github-actions-workflows/.github/workflows/notify-discord.yml@main
+    with:
+      bot-username: Successes Bot
+      notification-content: The organization taxi-gestion has been updated !
+      embed-title: Go to the organization repositories
+      embed-url: https://github.com/orgs/taxi-gestion/repositories?q=&type=all&language=&sort=name
+    secrets:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_SUCCESSES_WEBHOOK }}
