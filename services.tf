@@ -43,31 +43,31 @@ locals {
   }
 }
 
-module "services" {
-  for_each = local.services
-
-  source = "github.com/codingones-terraform-modules/aws-service-infrastructure"
-
-  aws_organizational_unit = local.project.aws_organizational_unit
-  github_organization     = local.project.github_organization
-  terraform_organization  = local.project.terraform_cloud_organization
-
-  github_repository   = "${each.key}-infrastructure"
-  template_repository = each.value.template
-
-  project = local.project.name
-  service = each.key
-
-  allow_force_pushes_to_default_branch = local.first_run || each.value.allow_force_pushes_to_default_branch
-
-  policy = each.value.deployer_policy
-
-  providers = {
-    github = github
-    tfe    = tfe
-    aws    = aws.organizational_unit
-    http   = http
-  }
-
-  depends_on = [module.github_organization]
-}
+#module "services" {
+#  for_each = local.services
+#
+#  source = "github.com/codingones-terraform-modules/aws-service-infrastructure"
+#
+#  aws_organizational_unit = local.project.aws_organizational_unit
+#  github_organization     = local.project.github_organization
+#  terraform_organization  = local.project.terraform_cloud_organization
+#
+#  github_repository   = "${each.key}-infrastructure"
+#  template_repository = each.value.template
+#
+#  project = local.project.name
+#  service = each.key
+#
+#  allow_force_pushes_to_default_branch = local.first_run || each.value.allow_force_pushes_to_default_branch
+#
+#  policy = each.value.deployer_policy
+#
+#  providers = {
+#    github = github
+#    tfe    = tfe
+#    aws    = aws.organizational_unit
+#    http   = http
+#  }
+#
+#  depends_on = [module.github_organization]
+#}
