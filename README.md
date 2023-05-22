@@ -68,25 +68,25 @@ Add the following reply :
     Thanks in advance,
 
 ### Deploy services in sequence (~ 60/90 min )
-- Run the 'Apply changes to vpc' workflow in the new organization matching '-infrastructure' repository (time <~ 3 min)
-- Once the domain has been registered / transfered run the 'Apply changes to domain' workflow in the new organization matching '-infrastructure' repository (time <~ 4-30 min)
-- Run the 'Apply changes to email' workflow in the new organization matching '-infrastructure' repository (time <~ 3 min)
-  - Wait to receive the "DKIM setup SUCCESS for avrtoken.com in US East (N. Virginia) region" email and run again the 'Apply changes to email' workflow (time <~ 3 min )
-  - Run again the workflow a time to have the configuration_set_name in the terraform variables.  (time <~ 3 min )
-- Run the 'Apply changes to identity' workflow in the new organization matching '-infrastructure' repository (time <~ 2 min)
-- Run the 'Apply changes to persistence' workflow in the new organization matching '-infrastructure' repository (time <~ 11 min)
-- Run the 'Apply changes to registry' workflow in the 'registry-infrastructure' repository, it end with error (time <~ 2 min)
-  - Run the 'Build and release the container to ECR.' in the 'api' repository, (time <~ 2 min)
-  - It should trigger the 'registry-infrastructure' again that will complete with success. (time <~ 2 min)
-- Run the 'Apply changes to api' workflow in the new organization matching '-infrastructure' repository  (time <~ 4 min)
+- Run the ['Apply changes to vpc'](https://github.com/taxi-gestion/vpc-infrastructure/actions) workflow (time <~ 3 min)
+- Once the domain has been registered / transfered run the ['Apply changes to domain'](https://github.com/taxi-gestion/domain-infrastructure/actions) workflow (time <~ 4-30 min)
+- Run the ['Apply changes to email'](https://github.com/taxi-gestion/email-infrastructure/actions) workflow in the new organization matching '-infrastructure' repository (time <~ 3 min)
+    - Wait to receive the "DKIM setup SUCCESS for avrtoken.com in US East (N. Virginia) region" email and run again the ['Apply changes to email'](https://github.com/taxi-gestion/email-infrastructure/actions) workflow (time <~ 3 min )
+    - Run again the ['Apply changes to email'](https://github.com/taxi-gestion/email-infrastructure/actions) workflow a third time to have the configuration_set_name in the terraform variables.  (time <~ 3 min )
+- Run the ['Apply changes to identity'](https://github.com/taxi-gestion/identity-infrastructure/actions) workflow (time <~ 2 min)
+- Run the ['Apply changes to persistence'](https://github.com/taxi-gestion/persistence-infrastructure/actions) workflow (time <~ 11 min)
+- Run the ['Apply changes to registry'](https://github.com/taxi-gestion/registry-infrastructure/actions) workflow, it ends with an error (time <~ 2 min)
+    - Run the ['Release'](https://github.com/taxi-gestion/api/actions) in the 'api' repository, (time <~ 2 min)
+    - It should trigger the ['Apply changes to registry'](https://github.com/taxi-gestion/registry-infrastructure/actions) again that will complete with success this time. (time <~ 2 min)
+- Run the ['Apply changes to api'](https://github.com/taxi-gestion/vpc-infrastructure/actions) workflow (time <~ 4 min)
 
 - Once the Cloudfront increase limit AND account verification requests are granted.
-  - Run the 'Apply changes to client' workflow in the new organization matching '-infrastructure' repository (time <~ 10/15 min)
+    - Run the ['Apply changes to client'](https://github.com/taxi-gestion/client-infrastructure/actions) workflow (time <~ 10/15 min)
 
-- (TODO Remove the need to run the admin infrastructure) Run the 'Apply the configuration' in admin infrastructure to update github action client repository variables.
+- (TODO Remove the need to run the admin infrastructure) Run the ['Apply the configuration'](https://github.com/organizations-infrastructure/taxi-gestion/actions) in admin infrastructure to update github-action client repository variables.
 
-- Run the "Fork Repository" workflow in the client repository (time <~ 1 min)
-- Refresh, clone the repository, replace the placeholder and push to trigger the "Deploy on S3" workflow in the client repository (time <~ 2 min)
+- You can update and push the [client repository](https://github.com/taxi-gestion/client) and ['api repository'](https://github.com/taxi-gestion/api) to trigger a release (time <~ 4 min)
+
 
 ### More manual operations with the support (20 min)
 
