@@ -1,18 +1,20 @@
 locals {
   applications = {
     api = {
-      github_repository        = "api"
-      github_repository_topics = ["api", "node", "fastify", "typescript", "postgresql", "aws", "ecr", "docker"]
-      template_repositories    = ["codingones-github-templates/fastify-api", "codingones-github-templates/aws-application-api"]
-      service                  = "ecr"
-      policy                   = local.policies.ecr
+      github_repository                    = "api"
+      github_repository_topics             = ["api", "node", "fastify", "typescript", "postgresql", "aws", "ecr", "docker"]
+      template_repositories                = ["codingones-github-templates/fastify-api", "codingones-github-templates/aws-application-api"]
+      service                              = "ecr"
+      policy                               = local.policies.ecr
+      allow_force_pushes_to_default_branch = false
     }
     client = {
-      github_repository        = "client"
-      github_repository_topics = ["client", "node", "typescript", "aws", "cloudfront", "cognito"]
-      template_repositories    = ["codingones-github-templates/angular-client", "codingones-github-templates/aws-application-client"]
-      service                  = "s3-client"
-      policy                   = local.policies.client
+      github_repository                    = "client"
+      github_repository_topics             = ["client", "node", "typescript", "aws", "cloudfront", "cognito"]
+      template_repositories                = ["codingones-github-templates/angular-client", "codingones-github-templates/aws-application-client"]
+      service                              = "s3-client"
+      policy                               = local.policies.client
+      allow_force_pushes_to_default_branch = false
     }
   }
 }
@@ -27,11 +29,12 @@ module "applications" {
   terraform_organization  = local.project.terraform_cloud_organization
   project                 = local.project.name
 
-  github_repository        = each.value.github_repository
-  github_repository_topics = each.value.github_repository_topics
-  template_repositories    = each.value.template_repositories
-  service                  = each.value.service
-  policy                   = each.value.policy
+  github_repository                    = each.value.github_repository
+  github_repository_topics             = each.value.github_repository_topics
+  template_repositories                = each.value.template_repositories
+  service                              = each.value.service
+  policy                               = each.value.policy
+  allow_force_pushes_to_default_branch = local.first_run || each.value.allow_force_pushes_to_default_branch
 
   providers = {
     github = github
