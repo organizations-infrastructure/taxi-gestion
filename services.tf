@@ -1,42 +1,58 @@
 locals {
+  common-variables = {
+    __PROJECT                = local.project.name
+    __TERRAFORM_ORGANIZATION = local.project.terraform_cloud_organization
+    __ORGANIZATION           = local.project.github_organization
+  }
+}
+
+locals {
   services = {
     vpc = {
       template                             = "codingones-github-templates/aws-service-vpc"
       deployer_policy                      = local.policies.vpc-infrastructure
       allow_force_pushes_to_default_branch = true
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "vpc-infrastructure" })
     }
     domain = {
       template                             = "codingones-github-templates/aws-service-domain"
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "domain-infrastructure" })
       deployer_policy                      = local.policies.domain-infrastructure
       allow_force_pushes_to_default_branch = true
     }
     email = {
       template                             = "codingones-github-templates/aws-service-email"
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "email-infrastructure" })
       deployer_policy                      = local.policies.email-infrastructure
       allow_force_pushes_to_default_branch = true
     }
     identity = {
       template                             = "codingones-github-templates/aws-service-identity"
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "identity-infrastructure" })
       deployer_policy                      = local.policies.identity-infrastructure
       allow_force_pushes_to_default_branch = true
     }
     persistence = {
       template                             = "codingones-github-templates/aws-service-persistence"
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "persistence-infrastructure" })
       deployer_policy                      = local.policies.persistence-infrastructure
       allow_force_pushes_to_default_branch = true
     }
     registry = {
       template                             = "codingones-github-templates/aws-service-registry"
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "registry-infrastructure" })
       deployer_policy                      = local.policies.registry-infrastructure
       allow_force_pushes_to_default_branch = true
     }
     api = {
       template                             = "codingones-github-templates/aws-service-api"
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "api-infrastructure" })
       deployer_policy                      = local.policies.api-infrastructure
       allow_force_pushes_to_default_branch = true
     }
     client = {
       template                             = "codingones-github-templates/aws-service-client"
+      templated_files_variables            = merge(local.common-variables, { __REPOSITORY = "client-infrastructure" })
       deployer_policy                      = local.policies.client-infrastructure
       allow_force_pushes_to_default_branch = true
     }
@@ -52,8 +68,9 @@ module "services" {
   github_organization     = local.project.github_organization
   terraform_organization  = local.project.terraform_cloud_organization
 
-  github_repository   = "${each.key}-infrastructure"
-  template_repository = each.value.template
+  github_repository         = "${each.key}-infrastructure"
+  template_repository       = each.value.template
+  templated_files_variables = each.value.templated_files_variables
 
   project = local.project.name
   service = each.key
