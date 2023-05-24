@@ -71,14 +71,14 @@ Add the following reply :
 - Run the ['Apply changes to vpc-infrastructure'](https://github.com/taxi-gestion/vpc-infrastructure/actions) workflow (time <~ 3 min)
 - Once the domain has been registered / transfered run the ['Apply changes to domain-infrastructure'](https://github.com/taxi-gestion/domain-infrastructure/actions) workflow (time <~ 4-30 min)
 - Run the ['Apply changes to email-infrastructure'](https://github.com/taxi-gestion/email-infrastructure/actions) workflow in the new organization matching '-infrastructure' repository (time <~ 3 min)
-    - Wait to receive the "DKIM setup SUCCESS for avrtoken.com in US East (N. Virginia) region" email and run again the ['Apply changes to email-infrastructure'](https://github.com/taxi-gestion/email-infrastructure/actions) workflow (time <~ 3 min )
+    - Wait to receive the "DKIM setup SUCCESS for YOUR_DOMAIN in US East (N. Virginia) region" email and run again the ['Apply changes to email-infrastructure'](https://github.com/taxi-gestion/email-infrastructure/actions) workflow (time <~ 3 min )
     - Run again the ['Apply changes to email-infrastructure'](https://github.com/taxi-gestion/email-infrastructure/actions) workflow a third time to have the configuration_set_name in the terraform variables.  (time <~ 3 min )
 - Run the ['Apply changes to identity-infrastructure'](https://github.com/taxi-gestion/identity-infrastructure/actions) workflow (time <~ 2 min)
 - Run the ['Apply changes to persistence-infrastructure'](https://github.com/taxi-gestion/persistence-infrastructure/actions) workflow (time <~ 11 min)
 - Run the ['Apply changes to registry-infrastructure'](https://github.com/taxi-gestion/registry-infrastructure/actions) workflow, it ends with an error (time <~ 2 min)
     - Run the ['Release'](https://github.com/taxi-gestion/api/actions) in the 'api' repository, (time <~ 2 min)
     - It should trigger the ['Apply changes to registry-infrastructure'](https://github.com/taxi-gestion/registry-infrastructure/actions) again that will complete with success this time. (time <~ 2 min)
-- Run the ['Apply changes to api-infrastructure'](https://github.com/taxi-gestion/api-infrastructure/actions) workflow (time <~ 4 min)
+    - It should trigger the ['Apply changes to api-infrastructure'](https://github.com/taxi-gestion/api-infrastructure/actions) workflow (time <~ 4 min)
 
 - Once the Cloudfront increase limit AND account verification requests are granted.
     - Run the ['Apply changes to client-infrastructure'](https://github.com/taxi-gestion/client-infrastructure/actions) workflow (time <~ 10/15 min)
