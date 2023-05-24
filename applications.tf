@@ -39,12 +39,17 @@ module "applications" {
   terraform_organization  = local.project.terraform_cloud_organization
   project                 = local.project.name
 
-  github_repository                    = each.value.github_repository
-  github_repository_topics             = each.value.github_repository_topics
-  template_repositories                = each.value.template_repositories
-  templated_files_variables            = each.value.templated_files_variables
-  service                              = each.value.service
-  policy                               = each.value.policy
+  github_repository        = each.value.github_repository
+  github_repository_topics = each.value.github_repository_topics
+
+  template_repositories     = each.value.template_repositories
+  templated_files_variables = each.value.templated_files_variables
+  template_fork             = false
+
+  service = each.value.service
+  policy  = each.value.policy
+
+  # TODO Replace  local.first_run by if the repo exist or not
   allow_force_pushes_to_default_branch = local.first_run || each.value.allow_force_pushes_to_default_branch
 
 

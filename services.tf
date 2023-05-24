@@ -6,6 +6,13 @@ locals {
   }
 }
 
+#data "external" "check_repository_exists" {
+#  for_each = local.services
+#
+#  program = ["./check_repository_exists.sh", var.github_organization, var.github_repository]
+#}
+
+
 locals {
   services = {
     vpc = {
@@ -71,10 +78,12 @@ module "services" {
   github_repository         = "${each.key}-infrastructure"
   template_repository       = each.value.template
   templated_files_variables = each.value.templated_files_variables
+  template_fork             = false
 
   project = local.project.name
   service = each.key
 
+  # TODO Replace  local.first_run by if the repo exist or not
   allow_force_pushes_to_default_branch = local.first_run || each.value.allow_force_pushes_to_default_branch
 
   policy = each.value.deployer_policy
