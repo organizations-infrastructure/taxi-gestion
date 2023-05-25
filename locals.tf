@@ -95,6 +95,10 @@ locals {
         github_key    = "PAT"
         terraform_key = "github_pat"
       }
+      "db_connexion_string" = {
+        github_key    = "PG_RDS_CONNEXION_STRING"
+        terraform_key = "db_connexion_string"
+      }
     }
     github_organization_variables = {
       "cloudfront_s3_bucket" = {
