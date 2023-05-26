@@ -23,10 +23,10 @@ locals {
       github_repository_topics             = ["client", "node", "typescript", "aws", "cloudfront", "cognito"]
       template_repositories                = ["codingones-github-templates/angular-client", "codingones-github-templates/aws-application-client"]
       templated_files_variables            = merge(local.common-applications-variables, { __REPOSITORY = "client" })
-      template_fork                        = true
+      template_fork                        = false
       service                              = "s3-client"
       policy                               = local.policies.client
-      allow_force_pushes_to_default_branch = true
+      allow_force_pushes_to_default_branch = false
     }
   }
 }

@@ -73,6 +73,25 @@ locals {
         value       = var.github_pat
         description = "A github PAT that allow administration operation on repositories"
       }
+      "user_groups" = {
+        hcl       = true
+        sensitive = false
+        value = jsonencode({
+          driver = {
+            name        = "driver"
+            description = "The user group for drivers"
+          }
+          manager = {
+            name        = "manager"
+            description = "The user group for managers"
+          }
+          developer = {
+            name        = "developer"
+            description = "The user group for developers"
+          }
+        })
+        description = "Map of user groups"
+      }
     }
     github_organization_secrets = {
       "tfe_team_token" = {
