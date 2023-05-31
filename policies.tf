@@ -15,6 +15,7 @@ locals {
           "Effect" : "Allow",
           "Action" : [
             "ec2:CreateVpc",
+            "ec2:AllocateAddress",
             "ec2:DescribeVpcs",
             "ec2:DescribeVpcAttribute",
             "ec2:ModifyVpcAttribute",
