@@ -14,9 +14,26 @@ locals {
         {
           "Effect" : "Allow",
           "Action" : [
-            "ec2:CreateVpc",
+            "ec2:CreateNatGateway",
+            "ec2:DeleteNatGateway",
+            "ec2:DescribeNatGateways",
             "ec2:AllocateAddress",
+            "ec2:ReleaseAddress",
+            "ec2:DescribeAddresses",
+            "ec2:CreateInternetGateway",
+            "ec2:DescribeInternetGateways",
+            "ec2:AttachInternetGateway",
+            "ec2:DetachInternetGateway",
+            "ec2:DeleteInternetGateway"
+          ],
+          "Resource" : "*"
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "ec2:CreateVpc",
             "ec2:DescribeVpcs",
+            "ec2:DescribeNetworkInterfaces",
             "ec2:DescribeVpcAttribute",
             "ec2:ModifyVpcAttribute",
             "ec2:DeleteVpc",
@@ -42,29 +59,12 @@ locals {
         {
           "Effect" : "Allow",
           "Action" : [
-            "ec2:CreateInternetGateway",
-            "ec2:DescribeInternetGateways",
-            "ec2:AttachInternetGateway",
-            "ec2:DetachInternetGateway",
-            "ec2:DeleteInternetGateway"
-          ],
-          "Resource" : "*"
-        },
-        {
-          "Effect" : "Allow",
-          "Action" : [
             "ec2:CreateRouteTable",
             "ec2:DescribeRouteTables",
             "ec2:CreateRoute",
             "ec2:ReplaceRoute",
             "ec2:DeleteRoute",
-            "ec2:DeleteRouteTable"
-          ],
-          "Resource" : "*"
-        },
-        {
-          "Effect" : "Allow",
-          "Action" : [
+            "ec2:DeleteRouteTable",
             "ec2:AssociateRouteTable",
             "ec2:DisassociateRouteTable",
             "ec2:ReplaceRouteTableAssociation"
